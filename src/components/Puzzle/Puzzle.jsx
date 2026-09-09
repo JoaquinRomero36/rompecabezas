@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { generatePieces, getGridForCount, loadImage } from '../../utils/puzzle'
 import PuzzleBoard from './PuzzleBoard'
@@ -6,6 +6,10 @@ import PieceTray from './PieceTray'
 import ReferenceModal from './ReferenceModal'
 import CompletionModal from './CompletionModal'
 import styles from './Puzzle.module.css'
+
+const BOARD_PADDING = 24
+const CELL_GAP = 2
+const MIN_PIECE_SIZE = 12
 
 function shuffleIds(arr) {
   const ids = arr.map((p) => p.id)
@@ -32,7 +36,6 @@ export default function Puzzle() {
   const [message, setMessage] = useState('')
   const [pieces, setPieces] = useState([])
   const [grid, setGrid] = useState({ rows: 0, cols: 0 })
-  const [pieceSize, setPieceSize] = useState(0)
   const [board, setBoard] = useState({})
   const [trayOrder, setTrayOrder] = useState([])
   const [moveCount, setMoveCount] = useState(0)
@@ -40,19 +43,23 @@ export default function Puzzle() {
   const [showRef, setShowRef] = useState(false)
   const [flashCell, setFlashCell] = useState(null)
   const [wrongId, setWrongId] = useState(null)
-  const [viewWidth, setViewWidth] = useState(window.innerWidth)
+  const [boardWidthPx, setBoardWidthPx] = useState(0)
 
-  const viewWidthRef = useRef(window.innerWidth)
+  const boardWrapRef = useRef(null)
   const flashTimer = useRef(null)
 
-  useEffect(() => {
-    const onResize = () => {
-      viewWidthRef.current = window.innerWidth
-      setViewWidth(window.innerWidth)
-    }
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [])
+  useLayoutEffect(() => {
+    if (!valid) return undefined
+    const el = boardWrapRef.current
+    if (!el) return undefined
+
+    const update = () => setBoardWidthPx(el.clientWidth || 0)
+    update()
+
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [valid])
 
   useEffect(() => {
     if (!valid) return undefined
@@ -66,15 +73,17 @@ export default function Puzzle() {
           img.naturalWidth,
           img.naturalHeight,
         )
-        const isMobile = viewWidthRef.current < 768
-        const boardWidth = isMobile
-          ? Math.min(viewWidthRef.current - 24, 520)
-          : 560
-        const ps = Math.max(20, Math.floor(boardWidth / cols))
+
+        const el = boardWrapRef.current
+        const width = el ? Math.max(0, el.clientWidth - BOARD_PADDING) : 320
+        const ps = Math.max(
+          MIN_PIECE_SIZE,
+          Math.floor((width - CELL_GAP * (cols - 1)) / cols),
+        )
+
         const generated = await generatePieces(img, rows, cols, ps)
         if (cancelled) return
         setGrid({ rows, cols })
-        setPieceSize(ps)
         setPieces(generated)
         setTrayOrder(shuffleIds(generated))
         setStatus('ready')
@@ -96,13 +105,14 @@ export default function Puzzle() {
     }
   }, [valid, imageSrc, pieceCount])
 
-  useEffect(() => {
-    if (status !== 'ready') return undefined
-    const isMobile = viewWidth < 768
-    const boardWidth = isMobile ? Math.min(viewWidth - 24, 520) : 560
-    const ps = Math.max(20, Math.floor(boardWidth / grid.cols))
-    setPieceSize(ps)
-  }, [viewWidth, status, grid])
+  const pieceSize = useMemo(() => {
+    if (!grid.cols) return 0
+    const width = boardWidthPx > 0 ? boardWidthPx : 320
+    return Math.max(
+      MIN_PIECE_SIZE,
+      Math.floor((width - BOARD_PADDING - CELL_GAP * (grid.cols - 1)) / grid.cols),
+    )
+  }, [boardWidthPx, grid.cols])
 
   const placedCount = Object.keys(board).length
   const remaining = pieces.length - placedCount
@@ -196,15 +206,6 @@ export default function Puzzle() {
 
   if (!valid) return <Navigate to="/" replace />
 
-  if (status === 'loading') {
-    return (
-      <div className={styles.center}>
-        <div className={styles.spinner} />
-        <p>Preparando tus piezas...</p>
-      </div>
-    )
-  }
-
   if (status === 'error') {
     return (
       <div className={styles.center}>
@@ -256,31 +257,41 @@ export default function Puzzle() {
       </div>
 
       <div className={styles.container}>
-        <div className={styles.boardWrap}>
-          <PuzzleBoard
-            rows={grid.rows}
-            cols={grid.cols}
-            pieceSize={pieceSize}
-            board={board}
-            onDrop={handleDrop}
-            onRemove={handleRemove}
-            flashCell={flashCell}
-          />
+        <div className={styles.boardWrap} ref={boardWrapRef}>
+          {status === 'loading' && (
+            <div className={styles.boardLoading}>
+              <div className={styles.spinner} />
+              <p>Preparando tus piezas...</p>
+            </div>
+          )}
+          {status === 'ready' && (
+            <PuzzleBoard
+              rows={grid.rows}
+              cols={grid.cols}
+              pieceSize={pieceSize}
+              board={board}
+              onDrop={handleDrop}
+              onRemove={handleRemove}
+              flashCell={flashCell}
+            />
+          )}
         </div>
-        <PieceTray
-          pieces={trayPieces}
-          size={pieceSize}
-          onDrop={handleDrop}
-          shakeId={wrongId}
-          remaining={remaining}
-        />
+        {status === 'ready' && (
+          <PieceTray
+            pieces={trayPieces}
+            size={pieceSize}
+            onDrop={handleDrop}
+            shakeId={wrongId}
+            remaining={remaining}
+          />
+        )}
       </div>
 
       {showRef && (
         <ReferenceModal src={imageSrc} onClose={() => setShowRef(false)} />
       )}
 
-      {isComplete && (
+      {status === 'ready' && isComplete && (
         <CompletionModal
           seconds={seconds}
           moves={moveCount}

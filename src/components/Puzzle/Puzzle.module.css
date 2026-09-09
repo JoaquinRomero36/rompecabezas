@@ -148,12 +148,23 @@
 .boardWrap {
   flex: 1;
   min-width: 0;
+  max-width: 100%;
   overflow: auto;
   background: var(--board-bg);
   border: 2px solid var(--board-border);
   border-radius: 20px;
   padding: 12px;
   box-shadow: 0 10px 28px var(--shadow);
+}
+
+.boardLoading {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-dim);
 }
 
 .board {
