@@ -24,13 +24,6 @@ export default function CompletionModal({
   return (
     <div className={styles.overlay}>
       <div className={styles.completeCard}>
-        <div className={styles.confetti} aria-hidden="true">
-          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M6 3h12l3 6-9 12L3 9l3-6z" />
-            <path d="M3 9h18" />
-            <path d="M9 3l3 6 3-6" />
-          </svg>
-        </div>
         <h2>¡Felicidades!</h2>
         <p className={styles.completeMsg}>
           Completaste un rompecabezas de {total} piezas ({sizeText}).

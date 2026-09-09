@@ -377,24 +377,6 @@
   }
 }
 
-.confetti {
-  display: flex;
-  justify-content: center;
-  color: var(--secondary);
-  margin-bottom: 14px;
-  animation: bob 1.6s ease-in-out infinite;
-}
-
-@keyframes bob {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-6deg);
-  }
-  50% {
-    transform: translateY(-10px) rotate(6deg);
-  }
-}
-
 .completeCard h2 {
   font-size: 1.8rem;
   margin-bottom: 8px;
