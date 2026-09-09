@@ -187,22 +187,6 @@
   border-color: transparent;
 }
 
-.cell.flash {
-  border-color: var(--danger);
-  background: rgba(255, 157, 157, 0.25);
-  animation: cellPulse 0.5s ease;
-}
-
-@keyframes cellPulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1.08);
-  }
-}
-
 .tray {
   width: 260px;
   flex-shrink: 0;
@@ -266,29 +250,6 @@
 
 .piece.placed:hover {
   transform: scale(1.04);
-}
-
-.shake {
-  animation: shake 0.45s ease;
-}
-
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  20% {
-    transform: translateX(-6px);
-  }
-  40% {
-    transform: translateX(6px);
-  }
-  60% {
-    transform: translateX(-4px);
-  }
-  80% {
-    transform: translateX(4px);
-  }
 }
 
 .overlay {

@@ -41,12 +41,9 @@ export default function Puzzle() {
   const [moveCount, setMoveCount] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [showRef, setShowRef] = useState(false)
-  const [flashCell, setFlashCell] = useState(null)
-  const [wrongId, setWrongId] = useState(null)
   const [boardWidthPx, setBoardWidthPx] = useState(0)
 
   const boardWrapRef = useRef(null)
-  const flashTimer = useRef(null)
 
   useLayoutEffect(() => {
     if (!valid) return undefined
@@ -140,14 +137,16 @@ export default function Puzzle() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, isComplete])
 
-  const flashFeedback = (key, id) => {
-    setFlashCell(key)
-    setWrongId(id)
-    if (flashTimer.current) clearTimeout(flashTimer.current)
-    flashTimer.current = setTimeout(() => {
-      setFlashCell((c) => (c === key ? null : c))
-      setWrongId((w) => (w === id ? null : w))
-    }, 500)
+  const shuffle = () => {
+    setBoard({})
+    setTrayOrder(shuffleIds(pieces))
+  }
+
+  const playAgain = () => {
+    setBoard({})
+    setMoveCount(0)
+    setSeconds(0)
+    setTrayOrder(shuffleIds(pieces))
   }
 
   const handleDrop = (piece, target) => {
@@ -162,8 +161,6 @@ export default function Puzzle() {
           next[key] = piece
           return next
         })
-      } else {
-        flashFeedback(key, piece.id)
       }
     } else if (target.target === 'tray') {
       setBoard((prev) => {
@@ -186,20 +183,6 @@ export default function Puzzle() {
       }
       return next
     })
-  }
-
-  const shuffle = () => {
-    setBoard({})
-    setTrayOrder(shuffleIds(pieces))
-    setFlashCell(null)
-  }
-
-  const playAgain = () => {
-    setBoard({})
-    setMoveCount(0)
-    setSeconds(0)
-    setTrayOrder(shuffleIds(pieces))
-    setFlashCell(null)
   }
 
   const goHome = () => navigate('/')
@@ -272,7 +255,6 @@ export default function Puzzle() {
               board={board}
               onDrop={handleDrop}
               onRemove={handleRemove}
-              flashCell={flashCell}
             />
           )}
         </div>
@@ -281,7 +263,6 @@ export default function Puzzle() {
             pieces={trayPieces}
             size={pieceSize}
             onDrop={handleDrop}
-            shakeId={wrongId}
             remaining={remaining}
           />
         )}

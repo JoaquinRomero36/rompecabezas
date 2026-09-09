@@ -1,7 +1,7 @@
 import PuzzlePiece from './PuzzlePiece'
 import styles from './Puzzle.module.css'
 
-export default function PieceTray({ pieces, size, onDrop, shakeId, remaining }) {
+export default function PieceTray({ pieces, size, onDrop, remaining }) {
   return (
     <div className={styles.tray} data-tray>
       <div className={styles.trayHead}>
@@ -22,7 +22,6 @@ export default function PieceTray({ pieces, size, onDrop, shakeId, remaining }) 
               piece={p}
               size={size}
               onDrop={onDrop}
-              shake={shakeId === p.id}
             />
           ))}
         </div>

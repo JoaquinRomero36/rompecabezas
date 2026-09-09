@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { findDropTarget } from '../../utils/dnd'
 import styles from './Puzzle.module.css'
 
-export default function PuzzlePiece({ piece, size, onDrop, onRemove, shake }) {
+export default function PuzzlePiece({ piece, size, onDrop, onRemove }) {
   const ref = useRef(null)
   const drag = useRef(null)
 
@@ -63,7 +63,6 @@ export default function PuzzlePiece({ piece, size, onDrop, onRemove, shake }) {
 
   const className = [
     styles.piece,
-    shake ? styles.shake : '',
     onRemove ? styles.placed : '',
   ]
     .filter(Boolean)
