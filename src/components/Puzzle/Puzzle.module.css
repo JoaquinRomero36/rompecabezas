@@ -368,6 +368,13 @@
   max-width: 420px;
   width: calc(100% - 32px);
   box-shadow: 0 24px 64px var(--shadow);
+  transform: translateY(-12vh);
+}
+
+@media (max-height: 600px) {
+  .completeCard {
+    transform: translateY(-6vh);
+  }
 }
 
 .confetti {
