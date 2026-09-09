@@ -156,6 +156,9 @@ export default function Puzzle() {
       setBoard((prev) => {
         if (prev[key] && prev[key].id === piece.id) return prev
         const next = { ...prev }
+        for (const [k, p] of Object.entries(next)) {
+          if (p.id === piece.id && k !== key) delete next[k]
+        }
         delete next[key]
         next[key] = piece
         return next
