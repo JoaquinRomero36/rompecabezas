@@ -1,7 +1,7 @@
 import PuzzlePiece from './PuzzlePiece'
 import styles from './Puzzle.module.css'
 
-export default function PuzzleBoard({ rows, cols, pieceSize, board, onDrop, onRemove }) {
+export default function PuzzleBoard({ rows, cols, pieceSize, board, onDrop, onRemove, onInspect }) {
   const cells = []
   for (let r = 0; r < rows; r += 1) {
     for (let c = 0; c < cols; c += 1) {
@@ -22,6 +22,7 @@ export default function PuzzleBoard({ rows, cols, pieceSize, board, onDrop, onRe
               size={pieceSize}
               onDrop={onDrop}
               onRemove={onRemove}
+              onInspect={onInspect}
             />
           )}
         </div>,

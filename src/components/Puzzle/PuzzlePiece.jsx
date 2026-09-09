@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { findDropTarget } from '../../utils/dnd'
 import styles from './Puzzle.module.css'
 
-export default function PuzzlePiece({ piece, size, onDrop, onRemove }) {
+export default function PuzzlePiece({ piece, size, onDrop, onRemove, onInspect }) {
   const ref = useRef(null)
   const drag = useRef(null)
 
@@ -81,6 +81,10 @@ export default function PuzzlePiece({ piece, size, onDrop, onRemove }) {
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
+      onContextMenu={(e) => {
+        e.preventDefault()
+        if (onInspect) onInspect(piece)
+      }}
       onDoubleClick={onRemove ? () => onRemove(piece) : undefined}
     />
   )

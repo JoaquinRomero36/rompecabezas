@@ -5,6 +5,7 @@ import PuzzleBoard from './PuzzleBoard'
 import PieceTray from './PieceTray'
 import ReferenceModal from './ReferenceModal'
 import CompletionModal from './CompletionModal'
+import PieceInspector from './PieceInspector'
 import styles from './Puzzle.module.css'
 
 const BOARD_PADDING = 24
@@ -41,6 +42,7 @@ export default function Puzzle() {
   const [moveCount, setMoveCount] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [showRef, setShowRef] = useState(false)
+  const [inspecting, setInspecting] = useState(null)
   const [boardWidthPx, setBoardWidthPx] = useState(0)
 
   const boardWrapRef = useRef(null)
@@ -269,6 +271,7 @@ export default function Puzzle() {
               board={board}
               onDrop={handleDrop}
               onRemove={handleRemove}
+              onInspect={setInspecting}
             />
           )}
         </div>
@@ -278,12 +281,23 @@ export default function Puzzle() {
             size={pieceSize}
             onDrop={handleDrop}
             remaining={remaining}
+            onInspect={setInspecting}
           />
         )}
       </div>
 
       {showRef && (
         <ReferenceModal src={imageSrc} onClose={() => setShowRef(false)} />
+      )}
+
+      {status === 'ready' && inspecting && (
+        <PieceInspector
+          key={inspecting.id}
+          imageSrc={imageSrc}
+          grid={grid}
+          piece={inspecting}
+          onClose={() => setInspecting(null)}
+        />
       )}
 
       {status === 'ready' && isComplete && (
