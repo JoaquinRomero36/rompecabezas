@@ -153,15 +153,13 @@ export default function Puzzle() {
     if (target.target === 'cell') {
       const key = `${target.row}-${target.col}`
       setMoveCount((m) => m + 1)
-      if (piece.correctRow === target.row && piece.correctCol === target.col) {
-        setBoard((prev) => {
-          if (prev[key] && prev[key].id === piece.id) return prev
-          const next = { ...prev }
-          delete next[key]
-          next[key] = piece
-          return next
-        })
-      }
+      setBoard((prev) => {
+        if (prev[key] && prev[key].id === piece.id) return prev
+        const next = { ...prev }
+        delete next[key]
+        next[key] = piece
+        return next
+      })
     } else if (target.target === 'tray') {
       setBoard((prev) => {
         const has = Object.values(prev).some((p) => p.id === piece.id)
