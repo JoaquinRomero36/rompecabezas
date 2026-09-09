@@ -76,14 +76,10 @@
     box-shadow 0.2s;
 }
 
-.count {
+.label {
   font-size: 2rem;
   font-weight: 800;
   color: var(--primary-strong);
-}
-
-.label {
-  font-weight: 700;
 }
 
 .desc {

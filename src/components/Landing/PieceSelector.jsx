@@ -5,7 +5,7 @@ export default function PieceSelector({ imageSrc, onSelect, onChangeImage }) {
   return (
     <div className={styles.card}>
       <div className={styles.head}>
-        <h2>¿Cuántas piezas querés armar?</h2>
+        <h2>¿Qué dificultad querés?</h2>
         <button type="button" className={styles.linkBtn} onClick={onChangeImage}>
           ← Cambiar imagen
         </button>
@@ -24,7 +24,6 @@ export default function PieceSelector({ imageSrc, onSelect, onChangeImage }) {
             className={styles.option}
             onClick={() => onSelect(opt.count)}
           >
-            <span className={styles.count}>{opt.count}</span>
             <span className={styles.label}>{opt.label}</span>
             <span className={styles.desc}>{opt.desc}</span>
           </button>

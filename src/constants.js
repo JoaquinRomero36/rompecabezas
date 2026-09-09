@@ -1,10 +1,10 @@
 export const MAX_IMAGE_MB = 20
 
 export const PIECE_OPTIONS = [
-  { count: 50, label: 'Tranqui', desc: '50 piezas' },
-  { count: 100, label: 'Clásico', desc: '100 piezas' },
-  { count: 250, label: 'Desafiante', desc: '250 piezas' },
-  { count: 500, label: 'Experto', desc: '500 piezas' },
+  { count: 50, label: 'Fácil', desc: '≈ 53 piezas en promedio' },
+  { count: 100, label: 'Medio', desc: '≈ 102 piezas en promedio' },
+  { count: 250, label: 'Difícil', desc: '≈ 249 piezas en promedio' },
+  { count: 500, label: 'Imposible', desc: '≈ 511 piezas en promedio' },
 ]
 
 export const PREDEFINED_PUZZLES = [
