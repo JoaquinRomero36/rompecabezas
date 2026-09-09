@@ -1,0 +1,210 @@
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px 48px;
+}
+
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 48px 16px 40px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text);
+  max-width: 640px;
+  margin: 0 auto 14px;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-dim);
+  max-width: 520px;
+  margin: 0 auto 34px;
+}
+
+.cta {
+  padding: 16px 40px;
+  border: none;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 8px 24px var(--shadow);
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    background 0.15s;
+}
+
+.cta:hover {
+  background: var(--primary-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px var(--shadow);
+}
+
+.floating {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.clip {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  opacity: 0.85;
+  animation: bob 4s ease-in-out infinite;
+}
+
+.clipA {
+  left: 12%;
+  top: 30%;
+  background: var(--secondary);
+  animation-delay: 0s;
+}
+
+.clipB {
+  right: 12%;
+  top: 24%;
+  background: var(--accent);
+  animation-delay: 1.2s;
+}
+
+.clipC {
+  right: 28%;
+  bottom: 8%;
+  background: var(--primary);
+  animation-delay: 2.1s;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(12deg);
+  }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.how h2,
+.formHead h2 {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.how h2 {
+  text-align: center;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.step {
+  padding: 18px;
+  border-radius: 16px;
+  background: var(--surface-alt);
+}
+
+.stepNum {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.step h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.step p {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+.form {
+  margin-top: 8px;
+}
+
+.formHead {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.formHead h2 {
+  margin: 0;
+}
+
+.linkBtn {
+  border: none;
+  background: transparent;
+  color: var(--primary-strong);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.linkBtn:hover {
+  background: var(--primary-soft);
+}
+
+.error {
+  margin-top: 16px;
+  color: var(--danger);
+  font-weight: 600;
+  text-align: center;
+}
+
+.footer {
+  margin-top: 56px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 700px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}

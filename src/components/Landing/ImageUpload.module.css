@@ -1,0 +1,59 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 14px;
+}
+
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  padding: 36px 16px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text-dim);
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.dropzone svg {
+  margin: 0 auto 10px;
+  color: var(--primary-strong);
+}
+
+.dropzone p {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.dropzone span {
+  font-size: 0.8rem;
+}
+
+.dropzone:hover,
+.dropzone:focus-visible {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.over {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.error {
+  margin-top: 12px;
+  color: var(--danger);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+}
