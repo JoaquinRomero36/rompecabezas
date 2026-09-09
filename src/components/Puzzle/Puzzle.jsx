@@ -8,7 +8,7 @@ import CompletionModal from './CompletionModal'
 import styles from './Puzzle.module.css'
 
 const BOARD_PADDING = 24
-const CELL_GAP = 2
+const CELL_GAP = 0
 const MIN_PIECE_SIZE = 12
 
 function shuffleIds(arr) {

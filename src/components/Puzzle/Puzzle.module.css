@@ -169,7 +169,7 @@
 
 .board {
   display: grid;
-  gap: 2px;
+  gap: 0;
   width: fit-content;
 }
 
@@ -246,6 +246,11 @@
 
 .piece:hover {
   transform: scale(1.06) rotate(-1deg);
+}
+
+.piece.placed {
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .piece.placed:hover {
