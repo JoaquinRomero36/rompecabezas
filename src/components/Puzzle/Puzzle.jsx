@@ -130,6 +130,15 @@ export default function Puzzle() {
     })
   }, [pieces, board, placedCount])
 
+  const correctCount = useMemo(() => {
+    let n = 0
+    for (const p of pieces) {
+      const cell = board[`${p.correctRow}-${p.correctCol}`]
+      if (cell && cell.id === p.id) n += 1
+    }
+    return n
+  }, [pieces, board])
+
   useEffect(() => {
     if (status !== 'ready' || isComplete) return undefined
     const id = setInterval(() => setSeconds((s) => s + 1), 1000)
@@ -218,6 +227,10 @@ export default function Puzzle() {
           <div className={styles.stat}>
             <span className={styles.statValue}>{moveText}</span>
             <span className={styles.statLabel}>intentos</span>
+          </div>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>{correctCount}</span>
+            <span className={styles.statLabel}>correctas</span>
           </div>
           <div className={styles.stat}>
             <span className={styles.statValue}>
