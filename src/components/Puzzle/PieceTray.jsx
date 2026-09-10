@@ -16,7 +16,7 @@ export default function PieceTray({ pieces, size, onDrop, remaining, onInspect }
           ¡Todas las piezas en su lugar! Una vez completado, verás el resultado.
         </p>
       ) : (
-        <div className={styles.trayGrid}>
+        <div data-traygrid className={styles.trayGrid}>
           {pieces.map((p) => (
             <PuzzlePiece
               key={p.id}

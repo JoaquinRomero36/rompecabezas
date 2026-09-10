@@ -32,6 +32,7 @@ export default function PuzzleBoard({ rows, cols, pieceSize, board, onDrop, onRe
 
   return (
     <div
+      data-board
       className={styles.board}
       style={{ gridTemplateColumns: `repeat(${cols}, ${pieceSize}px)` }}
     >

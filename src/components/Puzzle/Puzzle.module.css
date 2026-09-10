@@ -120,6 +120,14 @@
   transform: translateY(-1px);
 }
 
+.actionBtnActive,
+.actionBtnActive:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+  transform: none;
+}
+
 .primaryBtn {
   border: none;
   background: var(--primary);

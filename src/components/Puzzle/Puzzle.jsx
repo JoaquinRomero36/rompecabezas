@@ -6,6 +6,7 @@ import PieceTray from './PieceTray'
 import ReferenceModal from './ReferenceModal'
 import CompletionModal from './CompletionModal'
 import PieceInspector from './PieceInspector'
+import Magnifier from './Magnifier'
 import styles from './Puzzle.module.css'
 
 const BOARD_PADDING = 24
@@ -43,6 +44,7 @@ export default function Puzzle() {
   const [seconds, setSeconds] = useState(0)
   const [showRef, setShowRef] = useState(false)
   const [inspecting, setInspecting] = useState(null)
+  const [lupaOn, setLupaOn] = useState(false)
   const [boardWidthPx, setBoardWidthPx] = useState(0)
 
   const boardWrapRef = useRef(null)
@@ -244,6 +246,14 @@ export default function Puzzle() {
         <div className={styles.actions}>
           <button
             type="button"
+            className={`${styles.actionBtn} ${lupaOn ? styles.actionBtnActive : ''}`}
+            aria-pressed={lupaOn}
+            onClick={() => setLupaOn((v) => !v)}
+          >
+            Lupa
+          </button>
+          <button
+            type="button"
             className={styles.actionBtn}
             onClick={() => setShowRef(true)}
           >
@@ -285,6 +295,10 @@ export default function Puzzle() {
           />
         )}
       </div>
+
+      {status === 'ready' && (
+        <Magnifier enabled={lupaOn} board={board} trayPieces={trayPieces} />
+      )}
 
       {showRef && (
         <ReferenceModal src={imageSrc} onClose={() => setShowRef(false)} />
